@@ -40,3 +40,12 @@ self.addEventListener('fetch', function(event) {
 
 // TODO: listen for the "message" event, and call
 // skipWaiting if you get the appropriate message
+
+self.addEventListener('message',function(event){
+	if(event.data.action=="refresh"){
+		self.skipWaiting(); //a sw call skipWaiting while is waiting 
+		//or installing. That means that the sw shouldn't queue behind another
+		//sw. it should take control
+
+	}
+});
