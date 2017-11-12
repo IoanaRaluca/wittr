@@ -38,6 +38,12 @@ IndexController.prototype._registerServiceWorker = function() {
 
   // TODO: listen for the controlling service worker changing
   // and reload the page
+  
+  //the page gets an event when its value changes. that means a new sw has
+  //taken over
+  navigator.serviceWorker.addEventListener('controllerchange',function(){
+    window.location.reload();
+  });
 };
 
 IndexController.prototype._trackInstalling = function(worker) {
@@ -57,6 +63,7 @@ IndexController.prototype._updateReady = function(worker) {
   toast.answer.then(function(answer) {
     if (answer != 'refresh') return;
     // TODO: tell the service worker to skipWaiting
+     worker.postMessage({action:"refresh"});
   });
 };
 
